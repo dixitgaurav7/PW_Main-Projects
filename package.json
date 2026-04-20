@@ -1,0 +1,32 @@
+{
+  "name": "pw_projects",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test_demo": "cross-env ENV_NAME=demo npx playwright test",
+    "test_dev": "cross-env ENV_NAME=dev npx playwright test",
+    "test_demo_cr_hd": "cross-env ENV_NAME=demo npx playwright test --project=chromium --headed",
+    "test_demo_fr_hd": "cross-env ENV_NAME=demo npx playwright test --project=firefox --headed",
+    "test_demo_cr_hl": "cross-env ENV_NAME=demo npx playwright test --project=chromium",
+    "test_demo_fr_hl": "cross-env ENV_NAME=demo npx playwright test --project=firefox"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/crypto-js": "^4.2.2",
+    "@types/node": "^25.6.0",
+    "allure-playwright": "^3.7.1",
+    "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^10.4.0",
+    "cross-env": "^10.1.0",
+    "crypto-js": "^4.2.0",
+    "csv-parse": "^6.2.1",
+    "dotenv": "^17.4.2",
+    "xlsx": "^0.18.5"
+  }
+}
