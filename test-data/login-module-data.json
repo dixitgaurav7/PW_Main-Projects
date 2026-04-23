@@ -1,0 +1,6 @@
+{
+    "wrong_username":"asdfg",
+    "right_username":"admin",
+    "wrong_password":"adminwrongpassword",
+    "invalid_credentials_text":"Invalid credentials"
+}

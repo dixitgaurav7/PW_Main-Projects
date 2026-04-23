@@ -10,19 +10,25 @@ export class LoginPage {
   readonly userNameInput: Locator;
   readonly passwordInput: Locator;
   readonly loginButtonInput: Locator;
+  readonly errorPopup!: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.userNameInput = page.getByRole("textbox", { name: "Username" });
     this.passwordInput = page.getByRole("textbox", { name: "Password" });
     this.loginButtonInput = page.getByRole("button", { name: "Login" });
+    this.errorPopup = page.getByText("Invalid credentials");
+  
   }
 
   async gotoOrangeHrm() {
     const baseUrl =
       process.env.BASE_URL ?? "https://opensource-demo.orangehrmlive.com/";
 
-    await this.page.goto(new URL("/web/index.php/auth/login", baseUrl).toString());
+    await this.page.goto(new URL("/web/index.php/auth/login", baseUrl).toString(), {
+      waitUntil: "domcontentloaded",
+    });
+    await this.userNameInput.waitFor({ state: "visible" });
   }
 
   /* Login to Orange HRM
@@ -34,6 +40,7 @@ export class LoginPage {
     await this.passwordInput.fill(password);
     await this.loginButtonInput.click();
   }
+  
 
  
 }
