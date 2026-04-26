@@ -28,15 +28,24 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['html',{open:'always'}],],
+  reporter: [
+    ['html', { open: 'never' }],
+    ['allure-playwright', { outputFolder: 'allure-results' }]
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
-
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+  baseURL: 'https://restful-booker.herokuapp.com',
+  extraHTTPHeaders:{
+    'accept':'application/json',
+    'content-type':'application/json',
   },
+  trace: 'on-first-retry',
+  screenshot:"only-on-failure",
+  video:'retain-on-failure',
+  actionTimeout:60000,
+  navigationTimeout:60000,
+},
+
 
   /* Configure projects for major browsers */
   projects: [{
@@ -47,10 +56,18 @@ export default defineConfig({
     {
       name: 'chromium',
       dependencies: ['setup'],
-      use: { ...devices['Desktop Chrome'] },
+      testMatch: /.*UI-Test.*/,
+      use: { 
+        ...devices['Desktop Chrome'],
+        storageState: './playwright/.auth/auth.json'
+      },
+    },
+    {
+      name: 'api',
+      testMatch: /.*API-Test.*/,
     },
 
-    {
+    /*{
       name: 'firefox',
       dependencies: ['setup'],
       use: { ...devices['Desktop Firefox'] },
@@ -60,7 +77,7 @@ export default defineConfig({
       name: 'webkit',
       dependencies: ['setup'],
       use: { ...devices['Desktop Safari'] },
-    },
+    },*/
 
     /* Test against mobile viewports. */
     // {
