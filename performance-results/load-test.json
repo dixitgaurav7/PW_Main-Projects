@@ -1,0 +1,195 @@
+{
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "GET /booking - status 200": {
+                    "passes": 2033,
+                    "fails": 1,
+                    "name": "GET /booking - status 200",
+                    "path": "::GET /booking - status 200",
+                    "id": "4263994ac5ae6cf3b4d5e321548ec89f"
+                },
+                "GET /booking - response not empty": {
+                    "name": "GET /booking - response not empty",
+                    "path": "::GET /booking - response not empty",
+                    "id": "1e3b257a262668be8a6cb44b010eb16c",
+                    "passes": 2033,
+                    "fails": 1
+                },
+                "GET /booking/1 - status 200": {
+                    "fails": 1,
+                    "name": "GET /booking/1 - status 200",
+                    "path": "::GET /booking/1 - status 200",
+                    "id": "d694ab661088ca1574af4fe61856e41a",
+                    "passes": 2032
+                },
+                "GET /booking/1 - has firstname": {
+                    "path": "::GET /booking/1 - has firstname",
+                    "id": "a5603d69b2b8ec7ef5584ccd4a2a5520",
+                    "passes": 2032,
+                    "fails": 1,
+                    "name": "GET /booking/1 - has firstname"
+                },
+                "POST /booking - status 200": {
+                    "passes": 2032,
+                    "fails": 0,
+                    "name": "POST /booking - status 200",
+                    "path": "::POST /booking - status 200",
+                    "id": "987be54642e1466a4329ec1f380a9f8e"
+                },
+                "POST /booking - has bookingid": {
+                    "name": "POST /booking - has bookingid",
+                    "path": "::POST /booking - has bookingid",
+                    "id": "be049cfe9333ae536d478025ca54eedb",
+                    "passes": 2032,
+                    "fails": 0
+                },
+                "PUT /booking/:id - status 200": {
+                    "id": "09c72de0716c64921f8fc21b5d1630c0",
+                    "passes": 1991,
+                    "fails": 41,
+                    "name": "PUT /booking/:id - status 200",
+                    "path": "::PUT /booking/:id - status 200"
+                }
+            }
+    },
+    "metrics": {
+        "iterations": {
+            "count": 2034,
+            "rate": 6.649934839939977
+        },
+        "error_rate": {
+            "passes": 43,
+            "fails": 8088,
+            "thresholds": {
+                "rate<0.01": false
+            },
+            "value": 0.00528840241052761
+        },
+        "total_requests": {
+            "rate": 26.583392420625348,
+            "count": 8131
+        },
+        "checks": {
+            "passes": 14185,
+            "fails": 45,
+            "value": 0.9968376669009136
+        },
+        "http_req_duration": {
+            "med": 298.9095,
+            "max": 6338.8187,
+            "p(90)": 605.78564,
+            "p(95)": 879.7338799999999,
+            "avg": 392.6265976881451,
+            "min": 276.4825,
+            "thresholds": {
+                "p(95)<2000": false
+            }
+        },
+        "http_req_connecting": {
+            "p(95)": 0,
+            "avg": 1.4901317265125429,
+            "min": 0,
+            "med": 0,
+            "max": 339.9594,
+            "p(90)": 0
+        },
+        "data_received": {
+            "count": 90781208,
+            "rate": 296798.97634760954
+        },
+        "iteration_duration": {
+            "med": 5814.30285,
+            "max": 12349.8095,
+            "p(90)": 6174.4810800000005,
+            "p(95)": 6346.02944,
+            "avg": 5986.119898033429,
+            "min": 624.7468
+        },
+        "http_req_sending": {
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.010518524348253813,
+            "min": 0,
+            "med": 0,
+            "max": 2.3738
+        },
+        "http_req_blocked": {
+            "med": 0,
+            "max": 1070.9469,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 4.478980905066405,
+            "min": 0
+        },
+        "http_reqs": {
+            "count": 10165,
+            "rate": 33.233327260565325
+        },
+        "http_req_receiving": {
+            "p(90)": 1.5149599999999999,
+            "p(95)": 286.2715199999998,
+            "avg": 27.079139980324623,
+            "min": 0,
+            "med": 0,
+            "max": 663.4908
+        },
+        "http_req_tls_handshaking": {
+            "p(95)": 0,
+            "avg": 2.972594451549435,
+            "min": 0,
+            "med": 0,
+            "max": 677.6654,
+            "p(90)": 0
+        },
+        "response_time_ms": {
+            "min": 276.4825,
+            "med": 300.3545,
+            "max": 6338.8187,
+            "p(90)": 846.282,
+            "p(95)": 890.9293,
+            "avg": 410.53691505349803
+        },
+        "http_req_waiting": {
+            "max": 6338.3114,
+            "p(90)": 575.66308,
+            "p(95)": 605.9472,
+            "avg": 365.53693918347204,
+            "min": 276.3376,
+            "med": 297.8527
+        },
+        "vus_max": {
+            "value": 50,
+            "min": 50,
+            "max": 50
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 385.59790029638344,
+            "min": 276.4825,
+            "med": 298.88105,
+            "max": 6338.8187,
+            "p(90)": 604.9020099999999,
+            "p(95)": 878.2168999999999
+        },
+        "data_sent": {
+            "count": 2752039,
+            "rate": 8997.482805788384
+        },
+        "http_req_failed": {
+            "fails": 10122,
+            "passes": 43,
+            "thresholds": {
+                "rate<0.01": false
+            },
+            "value": 0.004230201672405312
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 50
+        }
+    }
+}

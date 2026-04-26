@@ -1,0 +1,97 @@
+# ──────────────────────────────────────────────────────────────────────────────
+#  Shared Playwright base configuration (YAML anchor)
+# ──────────────────────────────────────────────────────────────────────────────
+x-playwright-base: &playwright-base
+  build:
+    context: .
+    dockerfile: Dockerfile
+  # Mount env-files so container picks up the right .env.*
+  volumes:
+    - ./env-files:/app/env-files:ro              # read-only env files
+    - ./playwright-report:/app/playwright-report  # persist HTML report
+    - ./allure-results:/app/allure-results        # persist Allure raw results
+    - ./test-results:/app/test-results            # persist screenshots / videos
+  # Never restart automatically – tests are one-shot
+  restart: "no"
+
+# ──────────────────────────────────────────────────────────────────────────────
+#  Services
+# ──────────────────────────────────────────────────────────────────────────────
+services:
+
+  # ── 1. Run the FULL test suite (default environment: demo) ──────────────────
+  playwright-all:
+    <<: *playwright-base
+    container_name: pw_all_tests
+    environment:
+      - ENV_NAME=${ENV_NAME:-demo}            # override: ENV_NAME=dev docker compose up playwright-all
+      - CI=true                               # enables stricter CI behaviour in playwright.config.ts
+      - SECRET_KEY=${SECRET_KEY:-pw_secret_key}
+    command: >
+      sh -c "npx playwright test --reporter=html,allure-playwright"
+
+  # ── 2. API tests only ───────────────────────────────────────────────────────
+  playwright-api:
+    <<: *playwright-base
+    container_name: pw_api_tests
+    environment:
+      - ENV_NAME=${ENV_NAME:-demo}
+      - CI=true
+      - SECRET_KEY=${SECRET_KEY:-pw_secret_key}
+    command: >
+      sh -c "npx playwright test tests/API-Test --project=api --reporter=html,allure-playwright"
+
+  # ── 3. UI tests only ────────────────────────────────────────────────────────
+  playwright-ui:
+    <<: *playwright-base
+    container_name: pw_ui_tests
+    environment:
+      - ENV_NAME=${ENV_NAME:-demo}
+      - CI=true
+      - SECRET_KEY=${SECRET_KEY:-pw_secret_key}
+    # Playwright UI tests need a virtual display; the Microsoft image ships
+    # with Xvfb so we just need to start it via xvfb-run
+    command: >
+      sh -c "xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24'
+      npx playwright test tests/UI-Test --project=chromium --reporter=html,allure-playwright"
+
+  # ── 4. k6 performance tests ─────────────────────────────────────────────────
+  k6-perf:
+    <<: *playwright-base
+    container_name: pw_k6_perf
+    environment:
+      - ENV_NAME=${ENV_NAME:-demo}
+      - K6_OUT=${K6_OUT:-json=performance-results/k6-results.json}
+    volumes:
+      - ./env-files:/app/env-files:ro
+      - ./performance-results:/app/performance-results  # persist k6 JSON output
+    # Run the load test by default; override PERF_SCRIPT to run others
+    command: >
+      sh -c "k6 run tests/performance/${PERF_SCRIPT:-load-test.perf.ts}"
+
+  # ── 5. Serve the HTML report locally (run after tests complete) ─────────────
+  playwright-report:
+    image: nginx:alpine
+    container_name: pw_report_server
+    ports:
+      - "9323:80"           # open http://localhost:9323 to view the Playwright report
+    volumes:
+      - ./playwright-report:/usr/share/nginx/html:ro
+    depends_on:
+      - playwright-all
+    profiles:
+      - report              # start only when: docker compose --profile report up playwright-report
+
+  # ── 6. Serve the Allure report locally ──────────────────────────────────────
+  allure-report:
+    image: frankescobar/allure-docker-service
+    container_name: pw_allure_server
+    ports:
+      - "5050:5050"         # open http://localhost:5050 to view the Allure report
+    volumes:
+      - ./allure-results:/app/allure-results:ro
+    environment:
+      - CHECK_RESULTS_EVERY_SECONDS=3
+      - KEEP_HISTORY=1
+    profiles:
+      - report              # start only when: docker compose --profile report up allure-report

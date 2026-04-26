@@ -1,0 +1,8 @@
+Booking id 1: {
+  firstname: 'Mary',
+  lastname: 'Jackson',
+  totalprice: 547,
+  depositpaid: false,
+  bookingdates: { checkin: '2026-01-25', checkout: '2026-02-10' },
+  additionalneeds: 'Breakfast'
+}

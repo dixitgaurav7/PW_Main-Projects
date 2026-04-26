@@ -1,0 +1,1 @@
+Deleted booking response: Method Not Allowed

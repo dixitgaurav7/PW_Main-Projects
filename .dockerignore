@@ -1,0 +1,13 @@
+# Docker ignore – keeps the build context lean
+node_modules/
+.git/
+.github/
+.vscode/
+.claude/
+playwright-report/
+allure-report/
+allure-results/
+test-results/
+performance-results/
+*.log
+.env*
