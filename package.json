@@ -47,7 +47,9 @@
     "@types/node": "^25.6.0",
     "allure-commandline": "^2.38.1",
     "allure-playwright": "^3.7.1",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "@faker-js/faker": "^10.4.0",
